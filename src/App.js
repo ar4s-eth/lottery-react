@@ -1,7 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import web3 from './web3'
+// import { render } from '@testing-library/react';
 
 function App() {
+
+  web3.eth.getAccounts().then(console.log)
+  
   return (
     <div className="App">
       <header className="App-header">
