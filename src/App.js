@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import web3 from './web3'
-// import { render } from '@testing-library/react';
 import lottery from './lottery';
 
 function App() {
@@ -10,6 +9,17 @@ function App() {
   const [ players, setPlayers ] = useState([]);
   const [ balance, setBalance ] = useState('');
   const [ message, setMessage ] = useState('');
+
+  useEffect(() => {
+    async function asyncCalls() {
+
+      await lottery.methods.manager().call().then(result => setManager(result));
+      await lottery.methods.getPlayers().call().then(result => setPlayers(result));
+      await web3.eth.getBalance(lottery.options.address).then(result => setBalance(result));
+
+    }
+    asyncCalls();
+  }, []);
 
   return (
     <div className="App">
