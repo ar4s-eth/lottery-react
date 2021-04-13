@@ -1,10 +1,16 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import web3 from './web3'
 // import { render } from '@testing-library/react';
+import lottery from './lottery';
 
 function App() {
   
+  const [ manager, setManager ] = useState('');
+  const [ players, setPlayers ] = useState([]);
+  const [ balance, setBalance ] = useState('');
+  const [ message, setMessage ] = useState('');
+
   return (
     <div className="App">
       <header className="App-header">
