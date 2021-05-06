@@ -17,8 +17,6 @@ function App() {
       await lottery.methods.admin().call().then(result => setAdmin(result));
       await lottery.methods.getPlayers().call().then(result => setPlayers(result));
       await web3.eth.getBalance(lottery.options.address).then(result => setBalance(result));
-
-      // console.log(`admin`, admin);
     }
  
     asyncCalls();
@@ -31,8 +29,13 @@ function App() {
     await lottery.methods.enter().send({
       from: accounts[0],
       value: web3.utils.toWei('1', 'ether'),
-    });
-    setMessage('You have been entered into the lottery! Good luck!!');
+    })
+    .then((x) => {
+      setMessage('You have been entered into the lottery! Good luck!!');
+    })
+    .catch((error) => {
+      setMessage(`You rejected the transaction, please try again`)
+    })
   };
 
   const pickWinner = async (e) => {
@@ -40,6 +43,8 @@ function App() {
     const accounts = await web3.eth.getAccounts();
     setMessage('Waiting for the transaction to be mined...');
     await lottery.methods.pickWinner().send({ from: accounts[0] });
+
+    const winner = await 
     setMessage('A winner has been picked!');
   };
 
@@ -77,6 +82,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;
